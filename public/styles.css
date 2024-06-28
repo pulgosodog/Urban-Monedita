@@ -1,5 +1,5 @@
 body {
-
+    background-color: #e6e9ee;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -9,17 +9,22 @@ body {
     align-items: center;
 }
 
-h1 {
-    color: red;
-    ;
+form.landing {
+
+}
+
+button.landing {
+    border: none;
+    background-color: transparent;
 }
 
 .home {
     display: flex;
     flex-direction: row;
-    height: 75vh;
-    width: 80vw;
-    background-color: #F8F8F8;
+    margin-top: 8vh;
+    height: 85vh;
+    width: 85vw;
+    background-color: white;
     border-radius: 25px;
 }
 
@@ -27,27 +32,79 @@ h1 {
     display: flex;
     align-items: center;
     flex-direction: column;
-    border-color: grey;
-    border-style: solid;
     border-width: 1px;
+    margin-left: 2vw;
     width: 25%;
     height: 100%;
 }
 
-.menu button {
-    width: 80%;
-    margin: 15% 0 0;
-    padding: 5%;
+.menu form { 
+    display: flex;
+    flex-direction: column;
+    margin: 5vh 0 0;
+    width: 60%;
+    height: 6%;
+}
 
+.menu button {
+    height: 100%;
+    width: 100%;
+    border-radius: 2vw;
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu button.active{
+    background-color: #f5f5f7;
+}
+.menu button.menu-items:hover {
+    background-color: #f5f5f7;
+}
+
+.menu button img {
+    width: 10%;
+    margin-right: 5%;
+}
+.menu button a {
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+    width: 100%;
+    height: 100%;
 }
 
 .sub-menu {
     display: flex;
     flex-direction: column;
+    padding: 1.5%;
     width: calc(100% - 100px);
 }
 
-.sm-opions {
+.sub-menu h2 { 
+    align-self: center;
+}
+
+.card-deck {
+display: flex;
+flex-direction: row;
+justify-content:  center;
+flex-wrap: wrap;
+overflow: auto;
+}
+
+.card {
+margin: 2%;
+width: 20%;
+}
+
+.sm-options {
+    align-self: flex-end;
     display: flex;
     flex-direction: row;
+    margin-right: 3%;
 }

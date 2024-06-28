@@ -17,6 +17,16 @@ app.get('/', (req, res) => {
 res.render('index.ejs');
 });
 
+app.get('/viajes', (req, res) => {
+    res.render("viaje.ejs",{title:'Viajes'});
+});
+app.get('/ingresos', (req, res) => {
+    res.render("index.ejs", {title:'Ingresos'});
+});
+app.get('/conductores', (req, res) => {
+    res.render("conductores.ejs", {title:'Conductores'});
+});
+
 app.listen(port, ()=>{
 console.log('On localhost 3000')
 });
