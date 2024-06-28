@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio - Administración de Buses</title>
+
+</head>
+<body>
+    <h1>Bienvenido a la Administración de Urban Monedita</h1>
+    <ul>
+        <li><a href="{{ url_for('conductores') }}">Gestionar Conductores</a></li>
+        <li><a href="{{ url_for('vehiculos') }}">Gestionar Vehículos</a></li>
+        <li><a href="{{ url_for('rutas') }}">Gestionar Rutas</a></li>
+        <li><a href="{{ url_for('ingresos') }}">Ver Ingresos por Viaje</a></li>
+        <li><a href="{{ url_for('gastos') }}">Ver Gastos por Viaje</a></li>
+        <li><a href="{{ url_for('cuentas_pasajeros') }}">Ver Cuentas de Pasajeros</a></li>
+        <li><a href="{{ url_for('historial_viajes') }}">Ver Historial de Viajes</a></li>
+        <li><a href="{{ url_for('precios_viajes') }}">Precios de Viajes</a></li>
+        <li><a href="{{ url_for('add_viaje') }}">Añadir Viajes</a></li>
+    </ul>
+</body>
+</html>

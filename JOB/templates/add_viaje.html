@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Viaje</title>
+
+</head>
+<body>
+    <h1>Agregar Nuevo Viaje</h1>
+    <form action="{{ url_for('add_viaje') }}" method="post">
+        <label for="id_conductor">ID Conductor:</label>
+        <input type="text" id="id_conductor" name="id_conductor" required><br><br>
+
+        <label for="id_vehiculo">ID Vehículo:</label>
+        <input type="text" id="id_vehiculo" name="id_vehiculo" required><br><br>
+
+        <label for="id_ruta">ID Ruta:</label>
+        <input type="text" id="id_ruta" name="id_ruta" required><br><br>
+
+        <label for="hora_salida">Hora Salida:</label>
+        <input type="time" id="hora_salida" name="hora_salida" required><br><br>
+
+        <label for="hora_entrada">Hora Entrada:</label>
+        <input type="time" id="hora_entrada" name="hora_entrada" required><br><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required><br><br>
+
+        <label for="numero_pasajeros">Número de Pasajeros:</label>
+        <input type="text" id="numero_pasajeros" name="numero_pasajeros" required><br><br>
+
+        <label for="costo_viaje">Costo del Viaje:</label>
+        <input type="text" id="costo_viaje" name="costo_viaje" required><br><br>
+
+        <label for="comentarios_viaje">Comentarios:</label><br>
+        <textarea id="comentarios_viaje" name="comentarios_viaje" rows="4" cols="50"></textarea><br><br>
+
+        <button type="submit">Agregar Viaje</button>
+    </form>
+</body>
+</html>

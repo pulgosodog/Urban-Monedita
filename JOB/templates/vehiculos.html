@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Vehículos</title>
+
+</head>
+<body>
+    <h1>Lista de Vehículos</h1>
+    <a href="{{ url_for('add_vehiculo') }}">Agregar Nuevo Vehículo</a>
+    {% if vehiculos %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Matrícula</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Capacidad</th>
+                <th>Tipo Vehículo</th>
+                <th>Fecha Adquisición</th>
+                <th>Estado Vehículo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos %}
+            <tr>
+                <td>{{ vehiculo.IDVehiculo }}</td>
+                <td>{{ vehiculo.Matricula }}</td>
+                <td>{{ vehiculo.Marca }}</td>
+                <td>{{ vehiculo.Modelo }}</td>
+                <td>{{ vehiculo.Anio }}</td>
+                <td>{{ vehiculo.Capacidad }}</td>
+                <td>{{ vehiculo.TipoVehiculo }}</td>
+                <td>{{ vehiculo.FechaAdquisicion }}</td>
+                <td>{{ vehiculo.EstadoVehiculo }}</td>
+                <td>
+                    <form action="{{ url_for('delete_vehiculo', id_vehiculo=vehiculo.IDVehiculo) }}" method="post">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay vehículos registrados.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ingresos</title>
+    <!-- Agrega tus enlaces a CSS si es necesario -->
+</head>
+<body>
+    <h1>Registro de Ingresos por Viaje</h1>
+    {% if ingresos %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Viaje</th>
+                <th>Costo Viaje</th>
+                <th>Ingresos Totales</th>
+                <th>Gastos Totales</th>
+                <th>Ganancia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ingreso in ingresos %}
+            <tr>
+                <td>{{ ingreso.IDViaje }}</td>
+                <td>{{ ingreso.CostoViaje }}</td>
+                <td>{{ ingreso.IngresosTotales }}</td>
+                <td>{{ ingreso.GastosTotales }}</td>
+                <td>{{ ingreso.Ganancia }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay ingresos registrados.</p>
+    {% endif %}
+</body>
+</html>

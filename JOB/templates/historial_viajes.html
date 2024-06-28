@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Viajes</title>
+
+</head>
+<body>
+    <h1>Historial de Viajes por Cuenta de Pasajero</h1>
+    {% if historial_viajes %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Historial</th>
+                <th>ID Cuenta</th>
+                <th>ID Viaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for historial in historial_viajes %}
+            <tr>
+                <td>{{ historial.IDHistorial }}</td>
+                <td>{{ historial.IDCuenta }}</td>
+                <td>{{ historial.IDViaje }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay historial de viajes registrado para esta cuenta.</p>
+    {% endif %}
+</body>
+</html>

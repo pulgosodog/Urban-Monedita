@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Conductor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Agregar Conductor</h1>
+        <form method="post" action="/add_conductor">
+            <label for="nombre">Nombre:</label><br>
+            <input type="text" id="nombre" name="nombre" required><br>
+
+            <label for="licencia">Licencia:</label><br>
+            <input type="text" id="licencia" name="licencia"><br>
+
+            <label for="telefono">Teléfono:</label><br>
+            <input type="text" id="telefono" name="telefono"><br>
+
+            <label for="direccion">Dirección:</label><br>
+            <input type="text" id="direccion" name="direccion"><br>
+
+            <label for="fecha_contratacion">Fecha de Contratación:</label><br>
+            <input type="date" id="fecha_contratacion" name="fecha_contratacion" required><br>
+
+            <label for="salario">Salario:</label><br>
+            <input type="number" id="salario" name="salario" step="0.01" required><br>
+
+            <button type="submit">Agregar Conductor</button>
+        </form>
+    </div>
+</body>
+</html>
