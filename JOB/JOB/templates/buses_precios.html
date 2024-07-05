@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buses y Precios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Buses y Precios</h1>
+
+
+        <h2>Buses</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Bus</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Capacidad</th>
+                    <th>Tipo</th>
+                    <th>Fecha de Adquisición</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bus in buses %}
+                <tr>
+                    <td>{{ bus.IDBus }}</td>
+                    <td>{{ bus.Marca }}</td>
+                    <td>{{ bus.Modelo }}</td>
+                    <td>{{ bus.Capacidad }}</td>
+                    <td>{{ bus.Tipo }}</td>
+                    <td>{{ bus.FechaAdquisicion }}</td>
+                    <td>{{ bus.Estado }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Precios de Buses</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Precio</th>
+                    <th>ID Ruta</th>
+                    <th>ID Bus</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for precio in precios_buses %}
+                <tr>
+                    <td>{{ precio.IDPrecio }}</td>
+                    <td>{{ precio.IDRuta }}</td>
+                    <td>{{ precio.IDBus }}</td>
+                    <td>{{ precio.Precio }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
