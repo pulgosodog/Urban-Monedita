@@ -1,0 +1,26 @@
+<%- include("partials/header.ejs") %>
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID Ruta</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Destino</th>
+                <th scope="col">Distancia</th>
+                <th scope="col">Duracion Estimada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% locals.rutas.forEach(ruta => { %>
+            <tr>
+                <th scope="row"><%=ruta.IDRuta%></th>
+                <td><%=ruta.Origen%></td>
+                <td><%=ruta.Destino%></td>
+                <td><%=ruta.Distancia%></td>
+                <td><%=`${Math.floor(ruta.DuracionEstimada / 60)}h ${ruta.DuracionEstimada % 60}m` %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<%- include("partials/footer.ejs") %>

@@ -1,124 +1,25 @@
 <%- include("partials/header.ejs") %>
 <h2>Conductores</h2>
 <div class="card-deck">
+  <% locals.conductores.forEach(conductor => { %>
     <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
+      <!--<img class="card-img-top" src="..." alt="Card image cap">-->
         <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
+          <h5 class="card-title"><%=conductor.Nombre%></h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
+          <li class="list-group-item">Licencia: <%=conductor.Licencia%></li>
+          <li class="list-group-item">Telefono: <%=conductor.Telefono%></li>
+          <li class="list-group-item">Salario: C$<%=conductor.Salario%></li>
+          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: <%= `${new Date(conductor.FechaContratacion).getFullYear()}-${String(new Date(conductor.FechaContratacion).getMonth() + 1).padStart(2, '0')}-${String(new Date(conductor.FechaContratacion).getDate()).padStart(2, '0')}` %>
+            %></small></li>
+          <li class="list-group-item"><p class="card-text"><%=conductor.Direccion%></p></li>
         </ul>
         <div class="card-body">
           <a href="#" class="card-link">Viajes</a>
           <a href="#" class="card-link">Editar</a>
         </div>
       </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
-      <div class="card">
-        <img class="card-img-top" src="..." alt="Card image cap">
-        <div class="card-body">
-          <h5 class="card-title">Nombre del piloto</h5>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Licencia</li>
-          <li class="list-group-item">Telefono</li>
-          <li class="list-group-item">Salario</li>
-          <li class="list-group-item"><small class="text-muted">Fecha de contratacion: 2012/12/12</small></li>
-          <li class="list-group-item"><p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p></li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="card-link">Viajes</a>
-          <a href="#" class="card-link">Editar</a>
-        </div>
-      </div>
+      <% }); %>
   </div>
 <%- include("partials/footer.ejs") %>

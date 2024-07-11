@@ -1,0 +1,29 @@
+<%- include("partials/header.ejs") %>
+<h2>vehiculos</h2>
+<div class="table-wrapper">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Matricula</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Año</th>
+                <th scope="col">Capacidad</th>
+                <th scope="col">Tipo de Vehiculo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% locals.vehiculos.forEach(vehiculo => { %>
+            <tr>
+                <th scope="row"><%=vehiculo.Matricula%></th>
+                <td><%=vehiculo.Marca%></td>
+                <td><%=vehiculo.Modelo%></td>
+                <td><%=vehiculo.Año%></td>
+                <td><%=vehiculo.Capacidad%></td>
+                <td><%=vehiculo.TipoVehiculo%></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</div>
+<%- include("partials/footer.ejs") %>

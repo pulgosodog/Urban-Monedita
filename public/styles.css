@@ -9,8 +9,18 @@ body {
     align-items: center;
 }
 
-form.landing {
+h1 {
+    font-size: 2.5rem;
+}
 
+table {
+    font-size: 0.8em;
+}
+
+div.table-wrapper {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto
 }
 
 button.landing {
@@ -38,7 +48,7 @@ button.landing {
     height: 100%;
 }
 
-.menu form { 
+.menu form {
     display: flex;
     flex-direction: column;
     margin: 5vh 0 0;
@@ -59,17 +69,27 @@ button.landing {
     align-items: center;
 }
 
-.menu button.active{
+.menu button.menu-items p {
+    font-size: 1em;
+    margin: 0 5% 0 0;
+}
+
+.menu button.active {
     background-color: #f5f5f7;
 }
+
 .menu button.menu-items:hover {
     background-color: #f5f5f7;
 }
 
 .menu button img {
-    width: 10%;
+    width: auto;
+    ;
+    height: 30%;
     margin-right: 5%;
+    margin-left: 5%;
 }
+
 .menu button a {
     text-decoration: none;
     color: inherit;
@@ -85,21 +105,21 @@ button.landing {
     width: calc(100% - 100px);
 }
 
-.sub-menu h2 { 
+.sub-menu h2 {
     align-self: center;
 }
 
 .card-deck {
-display: flex;
-flex-direction: row;
-justify-content:  center;
-flex-wrap: wrap;
-overflow: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: auto;
 }
 
 div.card-deck .card {
-margin: 2%;
-width: 15rem;
+    margin: 2%;
+    width: 15rem;
 }
 
 .sm-options {
