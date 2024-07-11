@@ -1,0 +1,57 @@
+<%- include("partials/header.ejs") %>
+<h2>Viajes</h2>
+<div class="sm-options">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Rango
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Dia</a></li>
+            <li><a class="dropdown-item" href="#">Semana</a></li>
+            <li><a class="dropdown-item" href="#">Mes</a></li>
+        </ul>
+    </div>
+    <input type="text" name="daterange" value="01/01/2024 - 01/01/2024" />
+
+    <script>
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+        opens: 'left'
+      }, function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+    });
+    </script>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID Viaje</th>
+            <th scope="col">Conductor</th>
+            <th scope="col">Ruta</th>
+            <th scope="col">Salida/Entrada</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Pablo</td>
+            <td>Managua/Masaya</td>
+            <td>08:30/16:15</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Pedro</td>
+            <td>Diriamba/San Marcos</td>
+            <td>08:00/18:55</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>Granada/Masaya</td>
+            <td>05:00/13:00</td>
+        </tr>
+    </tbody>
+</table>
+<%- include("partials/footer.ejs") %>
