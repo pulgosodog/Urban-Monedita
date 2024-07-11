@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos</title>
+</head>
+<body>
+    <h1>Lista de Vehículos</h1>
+    <a href="{{ url_for('add_vehiculo') }}">Añadir Vehículo</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Matrícula</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Año</th>
+                <th>Capacidad</th>
+                <th>Tipo</th>
+                <th>Fecha Adquisición</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vehiculo in vehiculos %}
+                <tr>
+                    <td>{{ vehiculo.IDVehiculo }}</td>
+                    <td>{{ vehiculo.Matricula }}</td>
+                    <td>{{ vehiculo.Marca }}</td>
+                    <td>{{ vehiculo.Modelo }}</td>
+                    <td>{{ vehiculo.Año }}</td>
+                    <td>{{ vehiculo.Capacidad }}</td>
+                    <td>{{ vehiculo.TipoVehiculo }}</td>
+                    <td>{{ vehiculo.FechaAdquisicion }}</td>
+                    <td>{{ vehiculo.EstadoVehiculo }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_vehiculo', id_vehiculo=vehiculo.IDVehiculo) }}">Editar</a>
+                        <form action="{{ url_for('delete_vehiculo', id_vehiculo=vehiculo.IDVehiculo) }}" method="post" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

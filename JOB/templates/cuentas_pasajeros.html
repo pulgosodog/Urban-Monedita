@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cuentas de Pasajeros</title>
+ 
+</head>
+<body>
+    <h1>Lista de Cuentas de Pasajeros</h1>
+    <a href="{{ url_for('add_cuenta_pasajero') }}">Agregar Nueva Cuenta de Pasajero</a>
+    {% if cuentas_pasajeros %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Cuenta</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Fecha Registro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cuenta_pasajero in cuentas_pasajeros %}
+            <tr>
+                <td>{{ cuenta_pasajero.IDCuenta }}</td>
+                <td>{{ cuenta_pasajero.Nombre }}</td>
+                <td>{{ cuenta_pasajero.Email }}</td>
+                <td>{{ cuenta_pasajero.Telefono }}</td>
+                <td>{{ cuenta_pasajero.Direccion }}</td>
+                <td>{{ cuenta_pasajero.FechaRegistro }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay cuentas de pasajeros registradas.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Conductores</title>
+
+</head>
+<body>
+    <h1>Lista de Conductores</h1>
+    <a href="{{ url_for('add_conductor') }}">Agregar Nuevo Conductor</a>
+    {% if conductores %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Licencia</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Fecha Contratación</th>
+                <th>Salario</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for conductor in conductores %}
+            <tr>
+                <td>{{ conductor.IDConductor }}</td>
+                <td>{{ conductor.Nombre }}</td>
+                <td>{{ conductor.Licencia }}</td>
+                <td>{{ conductor.Telefono }}</td>
+                <td>{{ conductor.Direccion }}</td>
+                <td>{{ conductor.FechaContratacion }}</td>
+                <td>{{ conductor.Salario }}</td>
+                <td>
+                    <form action="{{ url_for('delete_conductor', id_conductor=conductor.IDConductor) }}" method="post">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay conductores registrados.</p>
+    {% endif %}
+</body>
+</html>

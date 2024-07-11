@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutas</title>
+</head>
+<body>
+    <h1>Lista de Rutas</h1>
+    <a href="{{ url_for('add_ruta') }}">Añadir Ruta</a>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Origen</th>
+                <th>Destino</th>
+                <th>Distancia</th>
+                <th>Duración Estimada</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ruta in rutas %}
+                <tr>
+                    <td>{{ ruta.IDRuta }}</td>
+                    <td>{{ ruta.Origen }}</td>
+                    <td>{{ ruta.Destino }}</td>
+                    <td>{{ ruta.Distancia }}</td>
+                    <td>{{ ruta.DuracionEstimada }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_ruta', id_ruta=ruta.IDRuta) }}">Editar</a>
+                        <form action="{{ url_for('delete_ruta', id_ruta=ruta.IDRuta) }}" method="post" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('index') }}">Volver al inicio</a>
+</body>
+</html>

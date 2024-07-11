@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Precios de Viajes</title>
+</head>
+<body>
+    <h1>Precios de Viajes</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Viaje</th>
+                <th>Costo Viaje</th>
+                <th>Ingresos Totales</th>
+                <th>Gastos Totales</th>
+                <th>Ganancia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for precio in precios_viajes %}
+            <tr>
+                <td>{{ precio[0] }}</td>
+                <td>{{ precio[1] }}</td>
+                <td>{{ precio[2] }}</td>
+                <td>{{ precio[3] }}</td>
+                <td>{{ precio[4] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
