@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Viaje</title>
+</head>
+<body>
+    <h1>Añadir Viaje</h1>
+    <form action="{{ url_for('add_viaje') }}" method="post">
+        <label for="id_conductor">Conductor:</label>
+        <select id="id_conductor" name="id_conductor" required>
+            {% for conductor in conductores %}
+                <option value="{{ conductor.IDConductor }}">{{ conductor.Nombre }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_vehiculo">Vehículo:</label>
+        <select id="id_vehiculo" name="id_vehiculo" required>
+            {% for vehiculo in vehiculos %}
+                <option value="{{ vehiculo.IDVehiculo }}">{{ vehiculo.Matricula }} - {{ vehiculo.Marca }} {{ vehiculo.Modelo }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_ruta">Ruta:</label>
+        <select id="id_ruta" name="id_ruta" required>
+            {% for ruta in rutas %}
+                <option value="{{ ruta.IDRuta }}">{{ ruta.Origen }} - {{ ruta.Destino }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="hora_salida">Hora de Salida:</label>
+        <input type="time" id="hora_salida" name="hora_salida" required><br>
+
+        <label for="hora_entrada">Hora de Entrada:</label>
+        <input type="time" id="hora_entrada" name="hora_entrada"><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required><br>
+
+        <label for="numero_pasajeros">Número de Pasajeros:</label>
+        <input type="number" id="numero_pasajeros" name="numero_pasajeros" required><br>
+
+        <label for="ingreso">Ingreso:</label>
+        <input type="number" step="0.01" id="ingreso" name="ingreso" required><br>
+
+        <label for="gasto">Gasto:</label>
+        <input type="number" step="0.01" id="gasto" name="gasto" required><br>
+
+        <button type="submit">Añadir Viaje</button>
+    </form>
+    <a href="{{ url_for('viajes') }}">Volver a la lista de viajes</a>
+</body>
+</html>

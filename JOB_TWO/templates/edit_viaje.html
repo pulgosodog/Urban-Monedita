@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Viaje</title>
+</head>
+<body>
+    <h1>Editar Viaje</h1>
+    <form action="{{ url_for('edit_viaje', id_viaje=viaje.IDViaje) }}" method="post">
+        <label for="id_conductor">Conductor:</label>
+        <select id="id_conductor" name="id_conductor" required>
+            {% for conductor in conductores %}
+                <option value="{{ conductor.IDConductor }}" {% if conductor.IDConductor == viaje.IDConductor %}selected{% endif %}>
+                    {{ conductor.Nombre }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_vehiculo">Vehículo:</label>
+        <select id="id_vehiculo" name="id_vehiculo" required>
+            {% for vehiculo in vehiculos %}
+                <option value="{{ vehiculo.IDVehiculo }}" {% if vehiculo.IDVehiculo == viaje.IDVehiculo %}selected{% endif %}>
+                    {{ vehiculo.Matricula }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label for="id_ruta">Ruta:</label>
+        <select id="id_ruta" name="id_ruta" required>
+            {% for ruta in rutas %}
+                <option value="{{ ruta.IDRuta }}" {% if ruta.IDRuta == viaje.IDRuta %}selected{% endif %}>
+                    {{ ruta.Origen }} - {{ ruta.Destino }}
+                </option>
+            {% endfor %}
+        </select><br>
+
+        <label for="hora_salida">Hora de Salida:</label>
+        <input type="time" id="hora_salida" name="hora_salida" value="{{ viaje.HoraSalida }}" required><br>
+
+        <label for="hora_entrada">Hora de Entrada:</label>
+        <input type="time" id="hora_entrada" name="hora_entrada" value="{{ viaje.HoraEntrada }}"><br>
+
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" value="{{ viaje.Fecha }}" required><br>
+
+        <label for="numero_pasajeros">Número de Pasajeros:</label>
+        <input type="number" id="numero_pasajeros" name="numero_pasajeros" value="{{ viaje.NumeroPasajeros }}" required><br>
+
+        <label for="ingreso">Ingreso:</label>
+        <input type="number" step="0.01" id="ingreso" name="ingreso" value="{{ viaje.Ingreso }}"><br>
+
+        <label for="gasto">Gasto:</label>
+        <input type="number" step="0.01" id="gasto" name="gasto" value="{{ viaje.Gasto }}"><br>
+
+        <button type="submit">Actualizar Viaje</button>
+    </form>
+    <a href="{{ url_for('viajes') }}">Volver a la lista de viajes</a>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Ruta</title>
+</head>
+<body>
+    <h1>Editar Ruta</h1>
+    <form action="{{ url_for('edit_ruta', id_ruta=ruta.IDRuta) }}" method="post">
+        <label for="origen">Origen:</label>
+        <input type="text" id="origen" name="origen" value="{{ ruta.Origen }}" required><br>
+
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino" value="{{ ruta.Destino }}" required><br>
+
+        <label for="distancia">Distancia:</label>
+        <input type="number" step="0.01" id="distancia" name="distancia" value="{{ ruta.Distancia }}" required><br>
+
+        <label for="duracion_estimada">Duración Estimada:</label>
+        <input type="time" id="duracion_estimada" name="duracion_estimada" value="{{ ruta.DuracionEstimada }}" required><br>
+
+        <button type="submit">Actualizar Ruta</button>
+    </form>
+    <a href="{{ url_for('rutas') }}">Volver a la lista de rutas</a>
+</body>
+</html>
