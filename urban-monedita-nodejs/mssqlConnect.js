@@ -147,6 +147,31 @@ export async function getVehiculos() {
     }
 }
 
+export async function addVehiculo(newVehiculoData) {
+    console.log('Received newVehiculoData:', newVehiculoData);
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+        
+        request.input('Matricula', sql.VarChar, newVehiculoData.Matricula);
+        request.input('Marca', sql.VarChar, newVehiculoData.Marca);
+        request.input('Modelo', sql.VarChar, newVehiculoData.Modelo);
+        request.input('Año', sql.Int, newVehiculoData.Año);
+        request.input('Capacidad', sql.Int, newVehiculoData.Capacidad);
+        request.input('TipoVehiculo', sql.VarChar, newVehiculoData.TipoVehiculo);
+
+        const query = `
+            INSERT INTO Vehiculos (Matricula, Marca, Modelo, Año, Capacidad, TipoVehiculo)
+            VALUES (@Matricula, @Marca, @Modelo, @Año, @Capacidad, @TipoVehiculo)
+        `;
+
+        await request.query(query);
+    } catch (err) {
+        console.error('Error executing insert query:', err);
+        throw err;
+    }
+}
+
 export async function getRutas() {
     try {
         const pool = await sql.connect(config);

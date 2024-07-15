@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getConductores, getVehiculos, getRutas, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
+import { getConductores, getVehiculos, addVehiculo, getRutas, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -101,6 +101,18 @@ app.get('/vehiculos', async (req, res) => {
         console.log("Vehiculos listados!")
         const vehiculos = await getVehiculos();
         res.render("vehiculos.ejs", { title: 'vehiculos', vehiculos: vehiculos })
+    } catch (err) {
+        res.status(500).send('Error retrieving Vehiculos');
+    }
+});
+
+app.post('/vehiculos/add', async (req, res) => {
+
+    console.log("Form vehiculo:", req.body)
+    try {
+        await addVehiculo(req.body);
+        Console.log('New vehiculo data!');
+        res.redirect('/vehiculos');
     } catch (err) {
         res.status(500).send('Error retrieving Vehiculos');
     }

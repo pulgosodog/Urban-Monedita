@@ -23,9 +23,8 @@ div.table-wrapper {
     overflow: auto
 }
 
-button.landing {
-    border: none;
-    background-color: transparent;
+div.menu form.landing {
+    margin: 6.5vh 4vw 0;
 }
 
 .home {
@@ -98,6 +97,14 @@ button.landing {
     height: 100%;
 }
 
+.table-add-form {
+    display: none;
+}
+
+.table>thead {
+    vertical-align: middle;
+}
+
 .sub-menu {
     display: flex;
     flex-direction: column;
@@ -131,6 +138,20 @@ div.card-deck .card {
     width: 30%;
     align-self: center;
     margin-bottom: 2%;
+}
+
+th {
+    width: auto;
+    /* Adjust each header cell width based on content */
+    white-space: nowrap;
+    /* Prevent wrapping in header cells */
+    text-align: center;
+    /* Optional: Center align header text */
+}
+
+input[type="text"] {
+    width: 100%;
+    /* Input fields take full width of their container */
 }
 
 .edit-buttons {

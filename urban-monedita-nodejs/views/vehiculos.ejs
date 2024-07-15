@@ -1,29 +1,74 @@
 <%- include("partials/header.ejs") %>
-<h2>vehiculos</h2>
-<div class="table-wrapper">
-    <table class="table table-striped">
+    <h2>Vehiculos</h2>
+    <button id="showAgregarFormBtn" class="btn btn-primary">Agregar Vehiculo</button>
+    <table class="table table-add-form">
         <thead>
             <tr>
-                <th scope="col">Matricula</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Modelo</th>
-                <th scope="col">Año</th>
-                <th scope="col">Capacidad</th>
-                <th scope="col">Tipo de Vehiculo</th>
+                <form id="vehiculo-add-form" method="POST" action="/vehiculos/add">
+                <th scope="col"><input type="text" name="Matricula" placeholder='Matricula' required></th>
+                <th scope="col"><input type="text" name="Marca" placeholder='Marca' required></th>
+                <th scope="col"><input type="text" name="Modelo" placeholder='Modelo' required></th>
+                <th scope="col"><input type="text" name="Año" placeholder='Año' required></th>
+                <th scope="col"><input type="text" name="Capacidad" placeholder='Capacidad' required></th>
+                <th scope="col"><input type="text" name="TipoVehiculo" placeholder='Tipo de Vehiculo' required></th>
+                <th scope="col"> <button type="submit" class="btn btn-primary">Guardar</button></th>
+                <th scope="col"> <button type="button" class="btn btn-secondary" id="cancelAgregarBtn">Cancelar</button>
+                </th>
+                </form>
             </tr>
         </thead>
-        <tbody>
-            <% locals.vehiculos.forEach(vehiculo => { %>
-            <tr>
-                <th scope="row"><%=vehiculo.Matricula%></th>
-                <td><%=vehiculo.Marca%></td>
-                <td><%=vehiculo.Modelo%></td>
-                <td><%=vehiculo.Año%></td>
-                <td><%=vehiculo.Capacidad%></td>
-                <td><%=vehiculo.TipoVehiculo%></td>
-            </tr>
-            <% }); %>
-        </tbody>
     </table>
-</div>
-<%- include("partials/footer.ejs") %>
+    <div class="table-wrapper">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Matricula</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">Capacidad</th>
+                    <th scope="col">Tipo de Vehiculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% locals.vehiculos.forEach(vehiculo=> { %>
+                    <tr>
+                        <th scope="row">
+                            <%=vehiculo.Matricula%>
+                        </th>
+                        <td>
+                            <%=vehiculo.Marca%>
+                        </td>
+                        <td>
+                            <%=vehiculo.Modelo%>
+                        </td>
+                        <td>
+                            <%=vehiculo.Año%>
+                        </td>
+                        <td>
+                            <%=vehiculo.Capacidad%>
+                        </td>
+                        <td>
+                            <%=vehiculo.TipoVehiculo%>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Show table form when "Agregar" button is clicked
+            document.getElementById('showAgregarFormBtn').addEventListener('click', function () {
+                document.querySelector('.table-add-form').style.display = 'table'; // Show the table form
+                document.getElementById('showAgregarFormBtn').style.display = 'none'; // Hide the "Agregar" button
+            });
+
+            // Hide table form when "Cancelar" button is clicked
+            document.getElementById('cancelAgregarBtn').addEventListener('click', function () {
+                document.querySelector('.table-add-form').style.display = 'none'; // Hide the table form
+                document.getElementById('showAgregarFormBtn').style.display = 'inline-block'; // Show the "Agregar" button
+            });
+        });
+    </script>
+    <%- include("partials/footer.ejs") %>
