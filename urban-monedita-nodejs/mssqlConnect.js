@@ -32,6 +32,37 @@ export async function getConductores() {
     }
 }
 
+export async function addConductor(newDriverData) {
+    try {
+        console.log('Received newDriverData:', newDriverData);
+
+        const pool = await sql.connect(config);
+        const request = pool.request();
+
+        // Setting input parameters for the query
+        request.input('Nombre', sql.VarChar, newDriverData.Nombre);
+        request.input('Licencia', sql.VarChar, newDriverData.Licencia);
+        request.input('Telefono', sql.VarChar, newDriverData.Telefono);
+        request.input('Salario', sql.Int, newDriverData.Salario);
+        request.input('FechaContratacion', sql.Date, newDriverData.FechaContratacion);
+        request.input('Direccion', sql.VarChar, newDriverData.Direccion);
+
+        // Constructing the SQL query
+        const query = `
+            INSERT INTO Conductores (Nombre, Licencia, Telefono, Salario, FechaContratacion, Direccion)
+            VALUES (@Nombre, @Licencia, @Telefono, @Salario, @FechaContratacion, @Direccion)
+        `;
+
+        // Executing the insert query
+        await request.query(query);
+
+        console.log(`Conductor added successfully`);
+    } catch (err) {
+        console.error("Error executing insert query: ", err);
+        throw err;
+    }
+}
+
 export async function updateConductor(licencia, editedData) {
     try {
         console.log('Received editedData:', editedData);

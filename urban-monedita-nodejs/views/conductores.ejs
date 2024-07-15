@@ -1,92 +1,184 @@
 <%- include("partials/header.ejs") %>
-<h2>Conductores</h2>
-<div class="card-deck">
-  <% locals.conductores.forEach((conductor, index) => { %>
-    <div class="card" id="card-<%= index %>">
-      <!--<img class="card-img-top" src="..." alt="Card image cap">-->
-      <div class="card-body">
-        <h5 class="card-title" id="driverName-<%= index %>"><%= conductor.Nombre %></h5>
-      </div>
-      <ul class="list-group list-group-flush" id="infoList-<%= index %>">
-        <li class="list-group-item" id="license-<%= index %>">Licencia: <%= conductor.Licencia %></li>
-        <li class="list-group-item" id="phone-<%= index %>">Telefono: <%= conductor.Telefono %></li>
-        <li class="list-group-item" id="salary-<%= index %>">Salario: C$<%= conductor.Salario %></li>
-        <li class="list-group-item"><small class="text-muted" id="hireDate-<%= index %>">Fecha de contratacion: <%= `${new Date(conductor.FechaContratacion).getFullYear()}-${String(new Date(conductor.FechaContratacion).getMonth() + 1).padStart(2, '0')}-${String(new Date(conductor.FechaContratacion).getDate()).padStart(2, '0')}` %></small></li>
-        <li class="list-group-item" id="address-<%= index %>"><p class="card-text"><%= conductor.Direccion %></p></li>
-      </ul>
-      <div class="card-body">
-        <a href="#" class="card-link" id="editLink-<%= index %>">Editar</a>
-      </div>
-      <div class="card-body" id="editForm-<%= index %>" style="display: none;">
-        <form id="driverEditForm-<%= index %>" method="POST" action="/conductores/edit/<%= conductor.Licencia %>">
-          <div class="form-group">
-            <label for="editName-<%= index %>">Nombre</label>
-            <input type="text" class="form-control" id="editName-<%= index %>" name="editName" value="<%= conductor.Nombre %>">
-          </div>
-          <div class="form-group">
-            <label for="editLicense-<%= index %>">Licencia</label>
-            <input type="text" class="form-control" id="editLicense-<%= index %>" name="editLicense" value="<%= conductor.Licencia %>">
-          </div>
-          <div class="form-group">
-            <label for="editPhone-<%= index %>">Telefono</label>
-            <input type="text" class="form-control" id="editPhone-<%= index %>" name="editPhone" value="<%= conductor.Telefono %>">
-          </div>
-          <div class="form-group">
-            <label for="editSalary-<%= index %>">Salario</label>
-            <input type="text" class="form-control" id="editSalary-<%= index %>" name="editSalary" value="<%= conductor.Salario %>">
-          </div>
-          <div class="form-group">
-            <label for="editHireDate-<%= index %>">Fecha de contratacion</label>
-            <input type="date" class="form-control" id="editHireDate-<%= index %>" name="editHireDate" value="<%= `${new Date(conductor.FechaContratacion).getFullYear()}-${String(new Date(conductor.FechaContratacion).getMonth() + 1).padStart(2, '0')}-${String(new Date(conductor.FechaContratacion).getDate()).padStart(2, '0')}` %>">
-          </div>
-          <div class="form-group">
-            <label for="editAddress-<%= index %>">Direccion</label>
-            <input type="text" class="form-control" id="editAddress-<%= index %>" name="editAddress" value="<%= conductor.Direccion %>">
-          </div>
-          <button type="submit" class="btn btn-primary" id="saveBtn-<%= index %>">Guardar</button>
-          <button type="button" class="btn btn-secondary" id="cancelBtn-<%= index %>">Cancelar</button>
-        </form>
-      </div>
+  <h2>Conductores</h2>
+  
+  <button id="agregar-btn" class="btn btn-primary">Agregar</button>
+  <div id="overlay" class="overlay">
+    <div class="overlay-content">
+       <form id="add-conductor-form" method="POST" action="/conductores/add">
+        <div class="form-group">
+            <label for="name">Nombre:</label>
+            <input class="form-control" type="text" id="name" name="Nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="license">Licencia:</label>
+            <input class="form-control" type="text" id="license" name="Licencia" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Telefono:</label>
+            <input class="form-control" type="text" id="phone" name="Telefono" required>
+        </div>
+        <div class="form-group">
+            <label for="salary">Salario:</label>
+            <input class="form-control" type="text" id="salary" name="Salario" required>
+        </div>
+        <div class="form-group">
+            <label for="hireDate">Fecha de contratacion:</label>
+            <input class="form-control" type="date" id="hireDate" name="FechaContratacion" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Direccion:</label>
+            <input class="form-control" type="text" id="address" name="Direccion" required>
+        </div>
+        <div class="edit-buttons">
+          <button class="btn btn-primary" type="submit">Guardar</button>
+          <button type="button" class="btn btn-secondary" id="cancelAgregarBtn">Cancelar</button>
+        </div>
+    </form>
     </div>
-  <% }); %>
 </div>
 
-<script>
+  <div class="card-deck">
+    <% conductores.forEach((conductor, index)=> { %>
+      <div class="card" id="card-<%= index %>">
+        <div class="card-body">
+          <h5 class="card-title" id="driverName-<%= index %>">
+            <%= conductor.Nombre %>
+          </h5>
+        </div>
+        <ul class="list-group list-group-flush" id="infoList-<%= index %>">
+          <li class="list-group-item" id="license-<%= index %>">Licencia: <%= conductor.Licencia %>
+          </li>
+          <li class="list-group-item" id="phone-<%= index %>">Telefono: <%= conductor.Telefono %>
+          </li>
+          <li class="list-group-item" id="salary-<%= index %>">Salario: C$<%= conductor.Salario %>
+          </li>
+          <li class="list-group-item"><small class="text-muted" id="hireDate-<%= index %>">Fecha de contratacion: <%=
+                `${new Date(conductor.FechaContratacion).getFullYear()}-${String(new
+                Date(conductor.FechaContratacion).getMonth() + 1).padStart(2, '0' )}-${String(new
+                Date(conductor.FechaContratacion).getDate()).padStart(2, '0' )}` %></small></li>
+          <li class="list-group-item" id="address-<%= index %>">
+            <p class="card-text">
+              <%= conductor.Direccion %>
+            </p>
+          </li>
+        </ul>
+        <div class="card-body button-container" id="buttonContainer-<%= index %>">
+          <a href="#" class="card-link" id="editLink-<%= index %>">Editar</a>
+          <a href="#" class="card-link" id="deleteLink-<%= index %>">Eliminar</a>
+          <div class="conductores-delete-button">
+            <button type="button" class="btn btn-secondary" id="cancelDelete-<%= index %>"
+              style="display: none;">Cancelar</button>
+            <button type="button" class="btn btn-danger" id="confirmDelete-<%= index %>"
+              style="display: none;">Confirmar</button>
+          </div>
+        </div>
+        <div class="card-body" id="editForm-<%= index %>" style="display: none;">
+          <form id="driverEditForm-<%= index %>" method="POST" action="/conductores/edit/<%= conductor.Licencia %>">
+            <div class="form-group">
+              <label for="editName-<%= index %>">Nombre</label>
+              <input type="text" class="form-control" id="editName-<%= index %>" name="editName"
+                value="<%= conductor.Nombre %>">
+            </div>
+            <div class="form-group">
+              <label for="editLicense-<%= index %>">Licencia</label>
+              <input type="text" class="form-control" id="editLicense-<%= index %>" name="editLicense"
+                value="<%= conductor.Licencia %>">
+            </div>
+            <div class="form-group">
+              <label for="editPhone-<%= index %>">Telefono</label>
+              <input type="text" class="form-control" id="editPhone-<%= index %>" name="editPhone"
+                value="<%= conductor.Telefono %>">
+            </div>
+            <div class="form-group">
+              <label for="editSalary-<%= index %>">Salario</label>
+              <input type="text" class="form-control" id="editSalary-<%= index %>" name="editSalary"
+                value="<%= conductor.Salario %>">
+            </div>
+            <div class="form-group">
+              <label for="editHireDate-<%= index %>">Fecha de contratacion</label>
+              <input type="date" class="form-control" id="editHireDate-<%= index %>" name="editHireDate"
+                value="<%= `${new Date(conductor.FechaContratacion).getFullYear()}-${String(new Date(conductor.FechaContratacion).getMonth() + 1).padStart(2, '0')}-${String(new Date(conductor.FechaContratacion).getDate()).padStart(2, '0')}` %>">
+            </div>
+            <div class="form-group">
+              <label for="editAddress-<%= index %>">Direccion</label>
+              <input type="text" class="form-control" id="editAddress-<%= index %>" name="editAddress"
+                value="<%= conductor.Direccion %>">
+            </div>
+            <div class="edit-buttons">
+              <button type="submit" class="btn btn-primary" id="saveBtn-<%= index %>">Guardar</button>
+              <button type="button" class="btn btn-secondary" id="cancelEditBtn-<%= index %>">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <% }); %>
+  </div>
 
-  //Codigo para el form de actualizacion de conductor
-  document.addEventListener('DOMContentLoaded', function() {
-    <% locals.conductores.forEach((conductor, index) => { %>
-      document.getElementById('editLink-<%= index %>').addEventListener('click', function() {
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  <% conductores.forEach((conductor, index) => { %>
+      // Edit button functionality
+      document.getElementById('editLink-<%= index %>').addEventListener('click', function () {
         document.getElementById('infoList-<%= index %>').style.display = 'none';
-        document.getElementById('editLink-<%= index %>').style.display = 'none';
+        document.getElementById('buttonContainer-<%= index %>').style.display = 'none';
         document.getElementById('editForm-<%= index %>').style.display = 'block';
       });
 
-      document.getElementById('cancelBtn-<%= index %>').addEventListener('click', function() {
+      // Cancel edit form button functionality
+      document.getElementById('cancelEditBtn-<%= index %>').addEventListener('click', function () {
         document.getElementById('infoList-<%= index %>').style.display = 'block';
-        document.getElementById('editLink-<%= index %>').style.display = 'block';
+        document.getElementById('buttonContainer-<%= index %>').style.display = 'block';
         document.getElementById('editForm-<%= index %>').style.display = 'none';
       });
 
-      document.getElementById('saveBtn-<%= index %>').addEventListener('click', function() {
-        // Get new values from the form
-        const newName = document.getElementById('editName-<%= index %>').value;
-        const newLicense = document.getElementById('editLicense-<%= index %>').value;
-        const newPhone = document.getElementById('editPhone-<%= index %>').value;
-        const newSalary = document.getElementById('editSalary-<%= index %>').value;
-        const newHireDate = document.getElementById('editHireDate-<%= index %>').value;
-        const newAddress = document.getElementById('editAddress-<%= index %>').value;
-
-        // Hide the form and show the updated info
-        document.getElementById('infoList-<%= index %>').style.display = 'block';
-        document.getElementById('editLink-<%= index %>').style.display = 'block';
-        document.getElementById('editForm-<%= index %>').style.display = 'none';
-
+      // Delete button functionality
+      document.getElementById('deleteLink-<%= index %>').addEventListener('click', function () {
+        document.getElementById('editLink-<%= index %>').style.display = 'none';
+        document.getElementById('deleteLink-<%= index %>').style.display = 'none';
+        document.getElementById('confirmDelete-<%= index %>').style.display = 'inline-block';
+        document.getElementById('cancelDelete-<%= index %>').style.display = 'inline-block';
       });
-    <% }); %>
-  });
 
-  //Codigo para la interaccion de botones de borrado
-  
-</script>
-<%- include("partials/footer.ejs") %>
+      // Cancel delete button functionality
+      document.getElementById('cancelDelete-<%= index %>').addEventListener('click', function () {
+        document.getElementById('editLink-<%= index %>').style.display = 'inline-block';
+        document.getElementById('deleteLink-<%= index %>').style.display = 'inline-block';
+        document.getElementById('confirmDelete-<%= index %>').style.display = 'none';
+        document.getElementById('cancelDelete-<%= index %>').style.display = 'none';
+      });
+
+      // Confirm delete button functionality
+      document.getElementById('confirmDelete-<%= index %>').addEventListener('click', async function () {
+        try {
+          const response = await fetch(`/conductores/delete/<%= conductor.Licencia %>`, { method: 'POST' });
+          if (response.ok) {
+            window.location.href = '/conductores';
+          } else {
+            console.error('Error deleting conductor');
+          }
+        } catch (error) {
+          console.error('Error deleting conductor', error);
+        }
+      });
+  <% }); %>
+});
+
+// Agregar btn
+// Function to show the add form overlay
+document.getElementById('agregar-btn').addEventListener('click', function() {
+    document.getElementById('overlay').style.display = 'block';
+});
+
+// Function to hide the add form overlay and reset form fields
+document.getElementById('cancelAgregarBtn').addEventListener('click', function() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('agregar-form').reset(); // Reset form fields
+});
+
+// Function to handle form submission for adding a new conductor
+document.getElementById('agregar-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+});
+
+  </script>
+  <%- include("partials/footer.ejs") %>

@@ -117,14 +117,86 @@ button.landing {
     overflow: auto;
 }
 
+.card-body {
+    display: flex;
+    flex-direction: row;
+}
+
 div.card-deck .card {
     margin: 2%;
     width: 15rem;
 }
+
+#agregar-btn {
+    width: 30%;
+    align-self: center;
+    margin-bottom: 2%;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.conductores-delete-button {
+    display: flex;
+    gap: 10%;
+}
+
+.edit-buttons button {
+    margin: 5%;
+}
+
+/* Overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    /* Blurred white background */
+    z-index: 1000;
+    /* Ensure it sits on top */
+}
+
+/* Overlay content */
+.overlay-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Ensure the form doesn't collide with existing styles */
+#agregar-form .form-group {
+    margin-bottom: 15px;
+}
+
+#agregar-form .form-control {
+    width: 100%;
+}
+
 
 .sm-options {
     align-self: flex-end;
     display: flex;
     flex-direction: row;
     margin-right: 3%;
+}
+
+.hidden {
+    display: none !important;
+    /* Hide the element */
+}
+
+.editLink,
+.deleteLink {
+    cursor: pointer;
+    /* Add pointer cursor for links */
 }
