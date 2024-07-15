@@ -1,5 +1,21 @@
 <%- include("partials/header.ejs") %>
 <h2>Rutas</h2>
+<button id="showAgregarFormBtn" class="btn btn-primary agregar-btn">Agregar Ruta</button>
+<table class="table table-add-form">
+    <thead>
+        <tr>
+            <form id="vehiculo-add-form" method="POST" action="/rutas/add">
+            <th scope="col"><input type="text" name="Origen" placeholder='Origen' required></th>
+            <th scope="col"><input type="text" name="Destino" placeholder='Destino' required></th>
+            <th scope="col"><input type="text" name="Distancia" placeholder='Distancia' required></th>
+            <th scope="col"><input type="text" name="DuracionEstimada" placeholder='Duracion Estimada' required></th>
+            <th scope="col"> <button type="submit" class="btn btn-primary">Guardar</button></th>
+            <th scope="col"> <button type="button" class="btn btn-secondary" id="cancelAgregarBtn">Cancelar</button>
+            </th>
+            </form>
+        </tr>
+    </thead>
+</table>
 <div class="table-wrapper">
     <table class="table table-striped">
         <thead>
@@ -24,4 +40,19 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Show table form when "Agregar" button is clicked
+        document.getElementById('showAgregarFormBtn').addEventListener('click', function () {
+            document.querySelector('.table-add-form').style.display = 'table'; // Show the table form
+            document.getElementById('showAgregarFormBtn').style.display = 'none'; // Hide the "Agregar" button
+        });
+
+        // Hide table form when "Cancelar" button is clicked
+        document.getElementById('cancelAgregarBtn').addEventListener('click', function () {
+            document.querySelector('.table-add-form').style.display = 'none'; // Hide the table form
+            document.getElementById('showAgregarFormBtn').style.display = 'inline-block'; // Show the "Agregar" button
+        });
+    });
+</script>
 <%- include("partials/footer.ejs") %>

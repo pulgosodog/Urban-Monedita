@@ -182,3 +182,26 @@ export async function getRutas() {
         throw err;
     }
 }
+
+export async function addRuta(newRutaData) {
+    console.log('Received newRutaData:', newRutaData);
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+        
+        request.input('Origen', sql.VarChar, newRutaData.Origen);
+        request.input('Destino', sql.VarChar, newRutaData.Destino);
+        request.input('Distancia', sql.Float, newRutaData.Distancia);
+        request.input('DuracionEstimada', sql.Int, newRutaData.DuracionEstimada);
+
+        const query = `
+            INSERT INTO Rutas (Origen, Destino, Distancia, DuracionEstimada)
+            VALUES (@Origen, @Destino, @Distancia, @DuracionEstimada)
+        `;
+
+        await request.query(query);
+    } catch (err) {
+        console.error('Error executing insert query:', err);
+        throw err;
+    }
+}

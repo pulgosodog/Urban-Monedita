@@ -105,6 +105,10 @@ div.menu form.landing {
     vertical-align: middle;
 }
 
+td {
+    text-align: center;
+}
+
 .sub-menu {
     display: flex;
     flex-direction: column;
@@ -135,6 +139,12 @@ div.card-deck .card {
 }
 
 #agregar-btn {
+    width: 30%;
+    align-self: center;
+    margin-bottom: 2%;
+}
+
+.agregar-btn {
     width: 30%;
     align-self: center;
     margin-bottom: 2%;

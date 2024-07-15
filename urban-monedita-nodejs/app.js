@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getConductores, getVehiculos, addVehiculo, getRutas, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
+import { getConductores, getVehiculos, addVehiculo, getRutas, addRuta, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -107,14 +107,14 @@ app.get('/vehiculos', async (req, res) => {
 });
 
 app.post('/vehiculos/add', async (req, res) => {
-
     console.log("Form vehiculo:", req.body)
     try {
         await addVehiculo(req.body);
-        Console.log('New vehiculo data!');
+        console.log('New vehiculo data!');
         res.redirect('/vehiculos');
     } catch (err) {
-        res.status(500).send('Error retrieving Vehiculos');
+        console.error('Error in POST /vehiculos/add:', err);
+        res.status(500).send('Error sending data');
     }
 });
 
@@ -125,6 +125,18 @@ app.get('/rutas', async (req, res) => {
         res.render("rutas.ejs", { title: 'rutas', rutas: rutas })
     } catch (err) {
         res.status(500).send('Error retrieving Rutas');
+    }
+});
+
+app.post('/rutas/add', async (req, res) => {
+
+    console.log("Form ruta:", req.body)
+    try {
+        await addRuta(req.body);
+        console.log('New ruta data!');
+        res.redirect('/rutas');
+    } catch (err) {
+
     }
 });
 
