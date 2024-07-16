@@ -24,7 +24,8 @@ div.table-wrapper {
 }
 
 div.menu form.landing {
-    margin: 6.5vh 4vw 0;
+    justify-self: start;
+    margin: 20% 4vw 20%;
 }
 
 .home {
