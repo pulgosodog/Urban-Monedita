@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getViajes, addViaje, editViaje, deleteViaje, getViajesFormData, getConductores, getVehiculos, addVehiculo, deleteVehiculo, editVehiculo, getRutas, addRuta, updateRuta, deleteRuta, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
+import { getViajes, addViaje, editViaje, deleteViaje, getViajesFormData,getViajesByConductor, getConductores, getVehiculos, addVehiculo, deleteVehiculo, editVehiculo, getRutas, addRuta, updateRuta, deleteRuta, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -78,6 +78,18 @@ app.delete('/viajes/delete/:id', async (req, res) => {
     }
 });
 
+app.get('/viajes/:licencia', async (req, res) => {
+    const { licencia } = req.params;
+
+    try {
+        const viajes = await getViajesByConductor(licencia); // Call function to fetch viajes from the database
+        res.render('viajes', { viajes }); // Render viajes page with the retrieved data
+    } catch (err) {
+        console.error('Error fetching viajes:', err);
+        res.status(500).send('Error fetching viajes'); // Handle error
+    }
+});
+
 app.get('/conductores', async (req, res) => {
     try {
         const conductores = await getConductores();
@@ -142,6 +154,7 @@ app.post('/conductores/delete/:licencia', async (req, res) => {
         res.status(500).send({ message: 'Error deleting conductor' });
     }
 });
+
 
 app.get('/vehiculos', async (req, res) => {
     try {

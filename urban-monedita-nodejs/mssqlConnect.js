@@ -130,6 +130,19 @@ export async function getViajesFormData() {
     }
 }
 
+export async function getViajesByConductor(licencia) {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request()
+            .input('IDConductor', sql.NVarChar, licencia)
+            .query('SELECT * FROM Viajes WHERE IDConductor = @IDConductor');
+        
+        return result.recordset;
+    } catch (err) {
+        console.error('Error fetching viajes from database:', err);
+        throw err;
+    }
+}
 
 export async function getConductores() {
     try {
