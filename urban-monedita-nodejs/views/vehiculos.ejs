@@ -5,51 +5,75 @@
         <thead>
             <tr>
                 <form id="vehiculo-add-form" method="POST" action="/vehiculos/add">
-                <th scope="col"><input type="text" name="Matricula" placeholder='Matricula' required></th>
-                <th scope="col"><input type="text" name="Marca" placeholder='Marca' required></th>
-                <th scope="col"><input type="text" name="Modelo" placeholder='Modelo' required></th>
-                <th scope="col"><input type="text" name="Año" placeholder='Año' required></th>
-                <th scope="col"><input type="text" name="Capacidad" placeholder='Capacidad' required></th>
-                <th scope="col"><input type="text" name="TipoVehiculo" placeholder='Tipo de Vehiculo' required></th>
-                <th scope="col"> <button type="submit" class="btn btn-primary">Guardar</button></th>
-                <th scope="col"> <button type="button" class="btn btn-secondary" id="cancelAgregarBtn">Cancelar</button>
-                </th>
+                    <th scope="col"><input type="text" name="Matricula" placeholder='Matricula' required></th>
+                    <th scope="col"><input type="text" name="Marca" placeholder='Marca' required></th>
+                    <th scope="col"><input type="text" name="Modelo" placeholder='Modelo' required></th>
+                    <th scope="col"><input type="text" name="Año" placeholder='Año' required></th>
+                    <th scope="col"><input type="text" name="Capacidad" placeholder='Capacidad' required></th>
+                    <th scope="col"><input type="text" name="TipoVehiculo" placeholder='Tipo de Vehiculo' required></th>
+                    <th scope="col"> <button type="submit" class="btn btn-primary">Guardar</button></th>
+                    <th scope="col"> <button type="button" class="btn btn-secondary"
+                            id="cancelAgregarBtn">Cancelar</button>
+                    </th>
                 </form>
             </tr>
         </thead>
     </table>
     <div class="table-wrapper">
-        <table class="table table-striped">
+        <table class="table">
             <thead>
-                <tr>
+                <tr class="table-active">
                     <th scope="col">Matricula</th>
                     <th scope="col">Marca</th>
                     <th scope="col">Modelo</th>
                     <th scope="col">Año</th>
                     <th scope="col">Capacidad</th>
                     <th scope="col">Tipo de Vehiculo</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <% locals.vehiculos.forEach(vehiculo=> { %>
-                    <tr>
+                <% locals.vehiculos.forEach((vehiculo, index)=> { %>
+                    <tr id="vehiculo-row-<%= index %>">
                         <th scope="row">
-                            <%=vehiculo.Matricula%>
-                        </th>
+                            <%= vehiculo.Matricula %>
+                                </td>
                         <td>
-                            <%=vehiculo.Marca%>
+                            <%= vehiculo.Marca %>
                         </td>
                         <td>
-                            <%=vehiculo.Modelo%>
+                            <%= vehiculo.Modelo %>
                         </td>
                         <td>
-                            <%=vehiculo.Año%>
+                            <%= vehiculo.Año %>
                         </td>
                         <td>
-                            <%=vehiculo.Capacidad%>
+                            <%= vehiculo.Capacidad %>
                         </td>
                         <td>
-                            <%=vehiculo.TipoVehiculo%>
+                            <%= vehiculo.TipoVehiculo %>
+                        </td>
+                        <td>
+                            <a href="#" class="editar-btn" data-index="<%= index %>">Editar</a>
+                        </td>
+                    </tr>
+                    <tr id="edit-form-row-<%= index %>" style="display: none;">
+                        <td colspan="7">
+                            <form class="edit-row-form" id="vehiculo-edit-form-<%= index %>" method="POST"
+                                action="/vehiculos/edit/<%= vehiculo.Matricula %>">
+                                <input type="hidden" name="OriginalMatricula" value="<%= vehiculo.Matricula %>">
+                                <input type="text" name="Matricula" value="<%= vehiculo.Matricula %>" required>
+                                <input type="text" name="Marca" value="<%= vehiculo.Marca %>" required>
+                                <input type="text" name="Modelo" value="<%= vehiculo.Modelo %>" required>
+                                <input type="text" name="Año" value="<%= vehiculo.Año %>" required>
+                                <input type="text" name="Capacidad" value="<%= vehiculo.Capacidad %>" required>
+                                <input type="text" name="TipoVehiculo" value="<%= vehiculo.TipoVehiculo %>" required>
+                                <button type="submit" class="btn btn-primary btn-sm">Guardar</button>
+                                <button type="button" class="btn btn-secondary cancelar-btn btn-sm"
+                                    data-index="<%= index %>">Cancelar</button>
+                                <button type="button" class="btn btn-danger borrar-btn btn-sm"
+                                    data-index="<%= index %>">Borrar</button>
+                            </form>
                         </td>
                     </tr>
                     <% }); %>
@@ -68,6 +92,47 @@
             document.getElementById('cancelAgregarBtn').addEventListener('click', function () {
                 document.querySelector('.table-add-form').style.display = 'none'; // Hide the table form
                 document.getElementById('showAgregarFormBtn').style.display = 'inline-block'; // Show the "Agregar" button
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const editarButtons = document.querySelectorAll('.editar-btn');
+            const cancelarButtons = document.querySelectorAll('.cancelar-btn');
+            const borrarButtons = document.querySelectorAll('.borrar-btn');
+
+            editarButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    document.getElementById(`vehiculo-row-${index}`).style.display = 'none';
+                    document.getElementById(`edit-form-row-${index}`).style.display = 'table-row';
+                });
+            });
+
+            cancelarButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    document.getElementById(`vehiculo-row-${index}`).style.display = 'table-row';
+                    document.getElementById(`edit-form-row-${index}`).style.display = 'none';
+                });
+            });
+
+            borrarButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    const matricula = document.querySelector(`#vehiculo-edit-form-${index} input[name="Matricula"]`).value;
+                    if (confirm(`Are you sure you want to delete vehiculo with Matricula: ${matricula}?`)) {
+                        fetch(`/vehiculos/delete/${matricula}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (response.ok) {
+                                    location.reload();
+                                } else {
+                                    alert('Error deleting vehiculo');
+                                }
+                            });
+                    }
+                });
             });
         });
     </script>

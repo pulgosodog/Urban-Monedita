@@ -21,6 +21,116 @@ export async function connectToDatabase() {
     }
 }
 
+export async function getViajes() {
+    try {
+        const pool = await sql.connect(config);
+        const result = await pool.request().query("SELECT * FROM Viajes");
+        return result.recordset;
+    } catch (err) {
+        console.error("Error executing query: ", err);
+        throw err;
+    }
+}
+
+export async function addViaje(newViajeData) {
+    console.log('Received newViajeData:', newViajeData);
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+        
+        request.input('IDConductor', sql.NVarChar, newViajeData.IDConductor);
+        request.input('IDVehiculo', sql.NVarChar, newViajeData.IDVehiculo);
+        request.input('IDRuta', sql.Int, newViajeData.IDRuta);
+        request.input('HoraSalida', sql.VarChar, newViajeData.HoraSalida);
+        request.input('HoraEntrada', sql.VarChar, newViajeData.HoraEntrada);
+        request.input('Fecha', sql.Date, newViajeData.Fecha);
+        request.input('IngresosGenerados', sql.Float, newViajeData.IngresosGenerados);
+        request.input('ComentariosViaje', sql.Text, newViajeData.ComentariosViaje);
+
+        const query = `
+            INSERT INTO Viajes (IDConductor, IDVehiculo, IDRuta, HoraSalida, HoraEntrada, Fecha, IngresosGenerados, ComentariosViaje)
+            VALUES (@IDConductor, @IDVehiculo, @IDRuta, @HoraSalida, @HoraEntrada, @Fecha, @IngresosGenerados, @ComentariosViaje)
+        `;
+
+        await request.query(query);
+    } catch (err) {
+        console.error('Error executing insert query:', err);
+        throw err;
+    }
+}
+
+export async function editViaje(idViaje, updatedViajeData) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+
+        request.input('IDViaje', sql.Int, idViaje);
+        request.input('IDConductor', sql.NVarChar, updatedViajeData.IDConductor);
+        request.input('IDVehiculo', sql.NVarChar, updatedViajeData.IDVehiculo);
+        request.input('IDRuta', sql.Int, updatedViajeData.IDRuta);
+        request.input('HoraSalida', sql.VarChar, updatedViajeData.HoraSalida);
+        request.input('HoraEntrada', sql.VarChar, updatedViajeData.HoraEntrada);
+        request.input('Fecha', sql.Date, updatedViajeData.Fecha);
+        request.input('IngresosGenerados', sql.Float, updatedViajeData.IngresosGenerados);
+        request.input('ComentariosViaje', sql.Text, updatedViajeData.ComentariosViaje);
+
+        const query = `
+            UPDATE Viajes
+            SET IDConductor = @IDConductor,
+                IDVehiculo = @IDVehiculo,
+                IDRuta = @IDRuta,
+                HoraSalida = @HoraSalida,
+                HoraEntrada = @HoraEntrada,
+                Fecha = @Fecha,
+                IngresosGenerados = @IngresosGenerados,
+                ComentariosViaje = @ComentariosViaje
+            WHERE IDViaje = @IDViaje
+        `;
+
+        await request.query(query);
+    } catch (err) {
+        console.error('Error executing update query:', err);
+        throw err;
+    }
+}
+
+export async function deleteViaje(idViaje) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+        request.input('IDViaje', sql.Int, idViaje);
+        await request.query('DELETE FROM Viajes WHERE IDViaje = @IDViaje');
+    } catch (err) {
+        console.error('Error executing delete query:', err);
+        throw err;
+    }
+}
+
+export async function getViajesFormData() {
+    try {
+        const pool = await sql.connect(config);
+        
+        const vehiculosResult = await pool.request().query("SELECT Matricula FROM Vehiculos");
+        const vehiculos = vehiculosResult.recordset.map(item => item.Matricula);
+        
+        const rutasResult = await pool.request().query("SELECT IDRuta, Origen, Destino FROM Rutas");
+        const rutas = rutasResult.recordset.map(item => ({
+            IDRuta: item.IDRuta,
+            Origen: item.Origen,
+            Destino: item.Destino
+        }));
+        
+        const conductoresResult = await pool.request().query("SELECT Licencia FROM Conductores");
+        const conductores = conductoresResult.recordset.map(item => item.Licencia);
+        
+        return { vehiculos, rutas, conductores };
+    } catch (err) {
+        console.error("Error retrieving data: ", err);
+        throw err;
+    }
+}
+
+
 export async function getConductores() {
     try {
         const pool = await sql.connect(config);
@@ -172,6 +282,49 @@ export async function addVehiculo(newVehiculoData) {
     }
 }
 
+export async function editVehiculo(originalMatricula, updatedVehiculoData) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+
+        request.input('OriginalMatricula', sql.VarChar, originalMatricula);
+        request.input('Matricula', sql.VarChar, updatedVehiculoData.Matricula);
+        request.input('Marca', sql.VarChar, updatedVehiculoData.Marca);
+        request.input('Modelo', sql.VarChar, updatedVehiculoData.Modelo);
+        request.input('Año', sql.Int, updatedVehiculoData.Año);
+        request.input('Capacidad', sql.Int, updatedVehiculoData.Capacidad);
+        request.input('TipoVehiculo', sql.VarChar, updatedVehiculoData.TipoVehiculo);
+
+        const query = `
+            UPDATE Vehiculos
+            SET Matricula = @Matricula,
+                Marca = @Marca,
+                Modelo = @Modelo,
+                Año = @Año,
+                Capacidad = @Capacidad,
+                TipoVehiculo = @TipoVehiculo
+            WHERE Matricula = @OriginalMatricula
+        `;
+
+        await request.query(query);
+    } catch (err) {
+        console.error('Error executing update query:', err);
+        throw err;
+    }
+}
+
+export async function deleteVehiculo(matricula) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+        request.input('Matricula', sql.VarChar, matricula);
+        await request.query('DELETE FROM Vehiculos WHERE Matricula = @Matricula');
+    } catch (err) {
+        console.error('Error executing delete query:', err);
+        throw err;
+    }
+}
+
 export async function getRutas() {
     try {
         const pool = await sql.connect(config);
@@ -203,5 +356,49 @@ export async function addRuta(newRutaData) {
     } catch (err) {
         console.error('Error executing insert query:', err);
         throw err;
+    }
+}
+
+export async function updateRuta(IDRuta, Origen, Destino, Distancia, DuracionEstimada) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+
+        request.input('IDRuta', sql.Int, IDRuta);
+        request.input('Origen', sql.VarChar, Origen);
+        request.input('Destino', sql.VarChar, Destino);
+        request.input('Distancia', sql.Float, Distancia);
+        request.input('DuracionEstimada', sql.Int, DuracionEstimada);
+
+        const query = `
+            UPDATE Rutas
+            SET Origen = @Origen, Destino = @Destino, Distancia = @Distancia, DuracionEstimada = @DuracionEstimada
+            WHERE IDRuta = @IDRuta
+        `;
+
+        await request.query(query);
+    } catch (error) {
+        console.error('Error updating ruta:', error);
+        throw error;
+    }
+}
+
+
+export async function deleteRuta(IDRuta) {
+    try {
+        const pool = await sql.connect(config);
+        const request = pool.request();
+
+        request.input('IDRuta', sql.Int, IDRuta);
+
+        const query = `
+            DELETE FROM Rutas
+            WHERE IDRuta = @IDRuta
+        `;
+
+        await request.query(query);
+    } catch (error) {
+        console.error('Error deleting ruta:', error);
+        throw error;
     }
 }

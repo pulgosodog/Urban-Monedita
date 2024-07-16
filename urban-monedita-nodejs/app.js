@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { getConductores, getVehiculos, addVehiculo, getRutas, addRuta, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
+import { getViajes, addViaje, editViaje, deleteViaje, getViajesFormData, getConductores, getVehiculos, addVehiculo, deleteVehiculo, editVehiculo, getRutas, addRuta, updateRuta, deleteRuta, updateConductor, deleteConductor, addConductor, connectToDatabase } from './mssqlConnect.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -23,12 +23,59 @@ app.get('/', (req, res) => {
     res.render('index.ejs');
 });
 
-app.get('/viajes', (req, res) => {
-    res.render("viaje.ejs", { title: 'Viajes' });
+app.get('/viajes', async (req, res) => {
+    try {
+        console.log("Viajes listados!");
+        const viajes = await getViajes(); // Function to fetch viajes from the database
+        res.render("viajes.ejs", { title: 'Viajes', viajes: viajes });
+    } catch (err) {
+        res.status(500).send('Error retrieving viajes');
+    }
 });
 
-app.get('/ingresos', (req, res) => {
-    res.render('ingresos.ejs', { title: 'Ingresos' });
+app.post('/viajes/add', async (req, res) => {
+    console.log("Form viaje:", req.body);
+    try {
+        await addViaje(req.body); // Function to add a new viaje to the database
+        console.log('New viaje added!');
+        res.redirect('/viajes');
+    } catch (err) {
+        console.error('Error in POST /viajes/add:', err);
+        res.status(500).send('Error adding viaje');
+    }
+});
+
+app.get('/viajes/add-data', async (req, res) => {
+    try {
+        const formData = await getViajesFormData();
+        res.json(formData);
+    } catch (err) {
+        res.status(500).send('Error retrieving data');
+    }
+});
+
+app.post('/viajes/edit/:id', async (req, res) => {
+    const { id } = req.params;
+    const updatedViajeData = req.body;
+    console.log("Route history, data gotten: ",updatedViajeData);
+    try {
+        await editViaje(id, updatedViajeData); // Function to update viaje in the database
+        console.log('Updated viaje data');
+        res.redirect('/viajes');
+    } catch (err) {
+        res.status(500).send('Error updating viaje');
+    }
+});
+
+app.delete('/viajes/delete/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await deleteViaje(id); // Function to delete a viaje from the database
+        console.log('Viaje deleted successfully');
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(500).send('Error deleting viaje');
+    }
 });
 
 app.get('/conductores', async (req, res) => {
@@ -118,6 +165,30 @@ app.post('/vehiculos/add', async (req, res) => {
     }
 });
 
+app.post('/vehiculos/edit/:matricula', async (req, res) => {
+    const { matricula } = req.params;
+    const updatedVehiculoData = req.body;
+
+    try {
+        await editVehiculo(matricula, updatedVehiculoData);
+        console.log('Updated vehiculo data');
+        res.redirect('/vehiculos');
+    } catch (err) {
+        res.status(500).send('Error updating vehiculo');
+    }
+});
+
+app.delete('/vehiculos/delete/:matricula', async (req, res) => {
+    const { matricula } = req.params;
+    try {
+        await deleteVehiculo(matricula);
+        console.log('Vehiculo deleted successfully');
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(500).send('Error deleting vehiculo');
+    }
+});
+
 app.get('/rutas', async (req, res) => {
     try {
         const rutas = await getRutas();
@@ -125,6 +196,19 @@ app.get('/rutas', async (req, res) => {
         res.render("rutas.ejs", { title: 'rutas', rutas: rutas })
     } catch (err) {
         res.status(500).send('Error retrieving Rutas');
+    }
+});
+
+app.post('/rutas/edit/:IDRuta', async (req, res) => {
+    const { IDRuta } = req.params;
+    const { Origen, Destino, Distancia, DuracionEstimada } = req.body;
+
+    try {
+        await updateRuta(IDRuta, Origen, Destino, Distancia, DuracionEstimada);
+        res.redirect('/rutas'); // Redirect to route listing after successful update
+    } catch (error) {
+        console.error('Error updating ruta:', error);
+        res.status(500).send('Error updating ruta');
     }
 });
 
@@ -137,6 +221,18 @@ app.post('/rutas/add', async (req, res) => {
         res.redirect('/rutas');
     } catch (err) {
 
+    }
+});
+
+app.delete('/rutas/delete/:IDRuta', async (req, res) => {
+    const { IDRuta } = req.params;
+
+    try {
+        await deleteRuta(IDRuta);
+        res.sendStatus(200); // Send success status after deletion
+    } catch (error) {
+        console.error('Error deleting ruta:', error);
+        res.status(500).send('Error deleting ruta');
     }
 });
 

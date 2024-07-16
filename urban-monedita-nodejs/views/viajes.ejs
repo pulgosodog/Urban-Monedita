@@ -1,0 +1,245 @@
+<%- include("partials/header.ejs") %>
+    <h2>Viajes</h2>
+    <div class="sm-options">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Rango
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Dia</a></li>
+                <li><a class="dropdown-item" href="#">Semana</a></li>
+                <li><a class="dropdown-item" href="#">Mes</a></li>
+            </ul>
+        </div>
+        <input class="form-control" value="2024-01-01" type="date" id="hireDate" name="FechaContratacion" required>
+        <input class="form-control" value="2018-07-22" type="date" id="hireDate" name="FechaContratacion" required>
+
+    </div>
+    <button id="showAgregarViajeBtn" class="btn btn-primary agregar-btn">Agregar Viaje</button>
+
+    <div id="overlay" class="overlay">
+        <div class="overlay-content">
+            <form id="add-viaje-form" method="POST" action="/viajes/add">
+                <div class="form-group">
+                    <label for="conductor-select">Conductor:</label>
+                    <select class="form-control" id="conductor-select" name="IDConductor" required>
+                        <option value="">Seleccione Conductor</option>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehiculo-select">Vehículo:</label>
+                    <select class="form-control" id="vehiculo-select" name="IDVehiculo" required>
+                        <option value="">Seleccione Vehículo</option>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ruta-select">Ruta:</label>
+                    <select class="form-control" id="ruta-select" name="IDRuta" required>
+                        <option value="">Seleccione Ruta</option>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hora-salida">Hora de Salida:</label>
+                    <input class="form-control" type="time" id="hora-salida" name="HoraSalida" required>
+                </div>
+                <div class="form-group">
+                    <label for="hora-entrada">Hora de Entrada:</label>
+                    <input class="form-control" type="time" id="hora-entrada" name="HoraEntrada">
+                </div>
+                <div class="form-group">
+                    <label for="fecha">Fecha:</label>
+                    <input class="form-control" type="date" id="fecha" name="Fecha" required>
+                </div>
+                <div class="form-group">
+                    <label for="ingresos-generados">Ingresos Generados:</label>
+                    <input class="form-control" type="number" step="0.01" id="ingresos-generados"
+                        name="IngresosGenerados">
+                </div>
+                <div class="form-group">
+                    <label for="comentarios">Comentarios:</label>
+                    <textarea class="form-control" id="comentarios" name="ComentariosViaje"></textarea>
+                </div>
+                <div class="edit-buttons">
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelAgregarBtn">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="edit-overlay" class="overlay">
+        <div class="overlay-content">
+            <form id="edit-viaje-form" method="POST">
+                <!-- Form fields to be populated -->
+                <!-- Inputs for IDViaje, IDConductor, IDVehiculo, IDRuta, HoraSalida, HoraEntrada, Fecha, IngresosGenerados, ComentariosViaje -->
+                <!-- Dropdowns for Conductor, Vehículo, Ruta -->
+                <div class="form-group">
+                    <label for="edit-conductor">Conductor:</label>
+                    <select class="form-control" id="edit-conductor" name="IDConductor" required>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-vehiculo">Vehículo:</label>
+                    <select class="form-control" id="edit-vehiculo" name="IDVehiculo" required>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-ruta">Ruta:</label>
+                    <select class="form-control" id="edit-ruta" name="IDRuta" required>
+                        <!-- Options will be dynamically populated -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-hora-salida">Hora de Salida:</label>
+                    <input class="form-control" type="time" id="edit-hora-salida" name="HoraSalida" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-hora-entrada">Hora de Entrada:</label>
+                    <input class="form-control" type="time" id="edit-hora-entrada" name="HoraEntrada">
+                </div>
+                <div class="form-group">
+                    <label for="edit-fecha">Fecha:</label>
+                    <input class="form-control" type="date" id="edit-fecha" name="Fecha" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-ingresos">Ingresos Generados:</label>
+                    <input class="form-control" type="number" step="0.01" id="edit-ingresos" name="IngresosGenerados">
+                </div>
+                <div class="form-group">
+                    <label for="edit-comentarios">Comentarios:</label>
+                    <textarea class="form-control" id="edit-comentarios" name="ComentariosViaje"></textarea>
+                </div>
+                <div class="edit-buttons">
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="deleteBtn">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="table">
+            <thead>
+                <tr class="table-active">
+                    <th scope="col">ID Viaje</th>
+                    <th scope="col">ID Conductor</th>
+                    <th scope="col">ID Vehiculo</th>
+                    <th scope="col">ID Ruta</th>
+                    <th scope="col">Hora Salida</th>
+                    <th scope="col">Hora Entrada</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Ingresos Generados</th>
+                    <th scope="col">Comentarios</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% locals.viajes.forEach((viaje, index)=> { %>
+                    <tr id="viaje-row-<%= index %>">
+                        <th scope="row">
+                            <%= viaje.IDViaje %>
+                        </th>
+                        <td>
+                            <%= viaje.IDConductor %>
+                        </td>
+                        <td>
+                            <%= viaje.IDVehiculo %>
+                        </td>
+                        <td>
+                            <%= viaje.IDRuta %>
+                        </td>
+                        <td>
+                            <%= viaje.HoraSalida %>
+                        </td>
+                        <td>
+                            <%= viaje.HoraEntrada %>
+                        </td>
+                        <td>
+                            <%= viaje.Fecha %>
+                        </td>
+                        <td>
+                            <%= viaje.IngresosGenerados %>
+                        </td>
+                        <td>
+                            <%= viaje.ComentariosViaje %>
+                        </td>
+                        <td>
+                            <a href="#" class="editar-btn" data-index="<%= index %>">Editar</a>
+                        </td>
+                    </tr>
+                    <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Agregar btn JS
+        document.addEventListener('DOMContentLoaded', function () {
+            const showAgregarViajeBtn = document.getElementById('showAgregarViajeBtn');
+            const overlay = document.getElementById('overlay');
+            const cancelAgregarBtn = document.getElementById('cancelAgregarBtn');
+            const addViajeForm = document.getElementById('add-viaje-form');
+            const conductorSelect = document.getElementById('conductor-select');
+            const vehiculoSelect = document.getElementById('vehiculo-select');
+            const rutaSelect = document.getElementById('ruta-select');
+
+            // Function to show the add viaje overlay
+            showAgregarViajeBtn.addEventListener('click', function () {
+                overlay.style.display = 'block';
+                fetchViajesFormData(); // Fetch data for dropdowns
+            });
+
+            // Function to hide the add viaje overlay and reset form fields
+            cancelAgregarBtn.addEventListener('click', function () {
+                overlay.style.display = 'none';
+                addViajeForm.reset(); // Reset form fields
+            });
+
+            // Fetch data for dropdowns
+            function fetchViajesFormData() {
+                fetch('/viajes/add-data')
+                    .then(response => response.json())
+                    .then(data => {
+                        populateDropdown(conductorSelect, data.conductores);
+                        populateDropdown(vehiculoSelect, data.vehiculos);
+                        populateRutasDropdown(rutaSelect, data.rutas);
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            }
+
+            // Function to populate a dropdown with options
+            function populateDropdown(selectElement, options) {
+                selectElement.innerHTML = '<option value="">Seleccione...</option>';
+                options.forEach(option => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = option;
+                    optionElement.textContent = option;
+                    selectElement.appendChild(optionElement);
+                });
+            }
+
+            // Function to populate Rutas dropdown with origen and destino
+            function populateRutasDropdown(selectElement, rutas) {
+                selectElement.innerHTML = '<option value="">Seleccione Ruta</option>';
+                rutas.forEach(ruta => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = ruta.IDRuta;
+                    optionElement.textContent = `${ruta.Origen} - ${ruta.Destino}`;
+                    selectElement.appendChild(optionElement);
+                });
+            }
+
+        });
+
+        // Edit btn JS
+        
+    </script>
+
+
+    <%- include("partials/footer.ejs") %>
